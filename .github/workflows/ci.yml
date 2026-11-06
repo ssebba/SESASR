@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  unit-tests:
+    name: Algorithm unit tests (no ROS)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install numpy sympy pytest
+      - name: EKF tests
+        working-directory: ekf_localization
+        run: python -m pytest -v test/test_models.py test/test_ekf.py
+      - name: DWA tests
+        working-directory: dwa_navigation
+        run: python -m pytest -v test/test_dwa.py
+
+  colcon:
+    name: colcon build & test (ROS 2 Humble)
+    runs-on: ubuntu-22.04
+    container: ros:humble
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ws/src/SESASR
+      - name: Import external packages
+        working-directory: ws
+        run: |
+          apt-get update && apt-get install -y python3-vcstool
+          vcs import src < src/SESASR/dependencies.repos
+          # Only the message package is needed: if the other packages stayed in the
+          # workspace, colcon would expect them to be built too
+          rm -rf src/turtlebot3_simulations src/turtlebot3_perception/turtlebot3_perception
+      - name: Install dependencies with rosdep
+        working-directory: ws
+        # Only the message package is needed to build: the simulator and the
+        # camera drivers are runtime dependencies and are skipped to keep CI fast.
+        run: |
+          rosdep update
+          rosdep install -y --ignore-src \
+            --from-paths src/SESASR src/turtlebot3_perception/landmark_msgs \
+            --skip-keys "turtlebot3_gazebo turtlebot3_perception rviz2 gazebo_ros"
+      - name: Build
+        working-directory: ws
+        run: |
+          source /opt/ros/humble/setup.bash
+          colcon build --packages-select landmark_msgs sesasr_bringup reactive_controller ekf_localization dwa_navigation
+      - name: Test (unit tests + flake8 + pep257)
+        working-directory: ws
+        run: |
+          source install/setup.bash
+          colcon test --packages-select sesasr_bringup reactive_controller ekf_localization dwa_navigation \
+            --event-handlers console_direct+
+          colcon test-result --verbose

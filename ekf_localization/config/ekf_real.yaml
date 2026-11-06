@@ -1,0 +1,26 @@
+# Real TurtleBot3 with an RGB-D camera and AprilTag landmarks in the lab arena
+/**:
+  ros__parameters:
+    use_sim_time: false
+    landmarks_topic: /camera/landmarks   # published by turtlebot3_perception apriltag.launch.py
+    initial_pose: [0.0, 0.77, 0.0]       # starting pose in the arena [m, m, rad]
+    # AprilTag positions measured in the arena
+    landmarks:
+      id: [0, 1, 2, 3, 4, 5, 6, 7]
+      x: [1.20, 1.68, 3.72, 3.75, 2.48, 4.80, 2.18, 2.94]
+      y: [1.68, -0.05, 0.14, 1.37, 1.25, 1.87, 1.00, 2.70]
+      z: [0.16, 0.18, 0.22, 0.21, 0.22, 0.24, 0.24, 0.73]
+
+ekf_node:
+  ros__parameters:
+    initial_covariance: [0.05, 0.05, 0.0087]
+    motion_noise: [0.01, 0.0087, 0.01, 0.0087]
+    landmark_noise_std: [0.15, 2.0]
+
+ekf_fusion_node:
+  ros__parameters:
+    initial_covariance: [0.1, 0.1, 0.0175, 0.1, 0.1]
+    motion_noise: [0.1, 0.05, 0.1, 0.05]
+    landmark_noise_std: [0.1, 1.0]
+    odom_noise_std: [0.1, 23.94]
+    imu_noise_std: 5.0

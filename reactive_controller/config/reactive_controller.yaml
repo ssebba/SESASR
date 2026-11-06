@@ -1,0 +1,11 @@
+reactive_controller:
+  ros__parameters:
+    goal: [6.5, 3.0]               # [x, y] in the odom frame [m]
+    goal_tolerance: 1.0            # stop when closer than this to the goal [m]
+    linear_velocity: 0.2           # forward speed [m/s]
+    angular_velocity: 0.8          # in-place rotation speed [rad/s]
+    control_frequency: 5.0         # [Hz]
+    front_sector_half_angle: 0.32  # frontal LiDAR sector is [-a, +a] [rad]
+    side_sector_min: 0.1           # lateral sectors are [min, max] on each side [rad]
+    side_sector_max: 2.0
+    threshold: 0.35                # frontal distance that triggers a rotation [m]

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>reactive_controller</name>
+  <version>1.0.0</version>
+  <description>
+    Reactive LiDAR-based obstacle-avoidance controller for the TurtleBot3.
+  </description>
+  <maintainer email="sebastiano.comai@outlook.it">Sebastiano Comai</maintainer>
+  <license>Apache-2.0</license>
+  <author>Sebastiano Comai</author>
+  <author>Vito Solito</author>
+  <author>Edoardo Altana</author>
+
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>sesasr_bringup</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

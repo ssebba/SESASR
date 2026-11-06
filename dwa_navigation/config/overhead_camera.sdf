@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <!-- Static top-down camera used by record_demo.launch.py. Pose set when spawning. -->
+  <model name="overhead_camera">
+    <static>true</static>
+    <link name="link">
+      <sensor name="camera" type="camera">
+        <always_on>true</always_on>
+        <update_rate>4</update_rate>
+        <camera>
+          <horizontal_fov>1.047</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <plugin name="overhead_camera_plugin" filename="libgazebo_ros_camera.so">
+          <camera_name>overhead</camera_name>
+          <frame_name>overhead_camera</frame_name>
+        </plugin>
+      </sensor>
+    </link>
+  </model>
+</sdf>

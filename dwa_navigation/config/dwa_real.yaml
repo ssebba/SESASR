@@ -1,0 +1,35 @@
+# Real TurtleBot3 following an AprilTag detected by the camera
+dwa_navigator:
+  ros__parameters:
+    use_sim_time: false
+    control_frequency: 15.0
+    collision_tol: 0.20
+    goal_dist_tol: 0.35
+    lidar_max_range: 3.5
+    num_lidar_ranges: 25
+    max_steps: 300
+    goal_topic: /dynamic_goal_pose
+    landmarks_topic: /camera/landmarks   # from turtlebot3_perception apriltag.launch.py
+    target_tag_id: 33                    # tag to follow
+    publish_markers: false
+
+    dwa:
+      sim_time: 4.0
+      time_granularity: 0.1
+      v_samples: 20
+      w_samples: 25
+      weight_angle: 2.0
+      weight_vel: 1.5
+      weight_obs: 2.0
+      weight_vel_decay: 1.0
+      weight_target: 2.0
+      slowdown_distance: 0.40
+      target_distance_desired: 0.30
+      velocity_decay: true
+      min_lin_vel: 0.0
+      max_lin_vel: 0.22
+      min_ang_vel: -2.0
+      max_ang_vel: 2.0
+      max_linear_acc: 0.7
+      max_ang_acc: 3.1416
+      radius: 0.15

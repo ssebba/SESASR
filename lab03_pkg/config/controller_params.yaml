@@ -1,9 +1,0 @@
-turtle_controller:
-  ros__parameters:
-    goal: [6.5, 3.0, 0.5]
-    max_vel_ang: [0.0, 0.0, 0.8]
-    max_vel_lin: [0.2, 0.0, 0.0] 
-    freq: 5 
-    max_angle: [0.320,0.1,2.0] 
-    threshold: 0.35
-  

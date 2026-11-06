@@ -1,0 +1,36 @@
+# Gazebo simulation (hard_maze world from the course turtlebot3_simulations fork)
+dwa_navigator:
+  ros__parameters:
+    use_sim_time: true
+    control_frequency: 15.0      # [Hz]
+    collision_tol: 0.20          # emergency stop below this LiDAR range [m]
+    goal_dist_tol: 0.35          # goal reached below this distance [m]
+    lidar_max_range: 3.5         # [m]
+    num_lidar_ranges: 25         # LiDAR sectors converted to obstacles
+    max_steps: 300               # timeout (300 steps at 15 Hz = 20 s)
+    goal_topic: /dynamic_goal_pose
+    landmarks_topic: /landmarks
+    target_tag_id: 33
+    publish_markers: true        # candidate/best paths and obstacles on /dwa/markers
+
+    dwa:
+      sim_time: 4.0
+      time_granularity: 0.1
+      v_samples: 20
+      w_samples: 25
+      weight_angle: 2.0
+      weight_vel: 1.5            # used only when velocity_decay is false
+      weight_obs: 2.0
+      weight_vel_decay: 1.0
+      weight_target: 2.0
+      slowdown_distance: 0.40    # [m]
+      target_distance_desired: 0.30  # [m]
+      velocity_decay: true
+      # TurtleBot3 Burger limits
+      min_lin_vel: 0.0
+      max_lin_vel: 0.22
+      min_ang_vel: -2.0
+      max_ang_vel: 2.0
+      max_linear_acc: 0.7
+      max_ang_acc: 3.1416
+      radius: 0.15
